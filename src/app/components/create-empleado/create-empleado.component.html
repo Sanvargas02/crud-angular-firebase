@@ -1,1 +1,39 @@
-<p>create-empleado works!</p>
+<!-- Contenedor -->
+<div class="container pt-4">
+  <div class="row">
+    <!-- Centramos el elemento -->
+    <div class="col-lg-6 offset-lg-3">
+      <!-- Inicio Card -->
+      <div class="card text-center">
+        <div class="card-body">
+          <h3>Agregar Empleado</h3>
+          <!-- Iniciamos nuestro formulario -->
+          <form class="mt-4">
+            <!-- Fila 1 -->
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control form-control-lg" placeholder="Nombre">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control form-control-lg" placeholder="Apellido">
+              </div>
+            </div>
+            <!-- inputs individuales -->
+            <input type="text" class="form-control form-control-lg mt-3" placeholder="Documento">
+            <input type="text" class="form-control form-control-lg mt-3" placeholder="Salario">
+            <!-- Botones -->
+            <div class="mt-3 row">
+              <div class="col">
+                <button type="text" routerLink="/list-empleados" class="btn btn-secondary btn-lg mr-3">Volver</button>
+              </div>
+              <div class="col">
+                <button type="submit" class="btn btn-dark btn-lg">Agregar</button>
+              </div>
+            </div>
+          </form>
+          <!-- Fin Formulario -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
