@@ -40,6 +40,8 @@ export class CreateEmpleadoComponent {
     }
     //empleado es el objeto que le vamos a pasar a firebase
     console.log(empleado);
+    //Limpiar el formulario
+    this.createEmpleado.reset();
   }
 
 }
