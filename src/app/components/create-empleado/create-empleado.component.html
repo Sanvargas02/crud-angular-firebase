@@ -6,7 +6,12 @@
       <!-- Inicio Card -->
       <div class="card text-center">
         <div class="card-body">
-          <h3>Agregar Empleado</h3>
+          <!-- Agregamos un spinner en el h3 -->
+          <h3>Agregar Empleado
+            <div *ngIf="loading" class="spinner-border float-end" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </h3>
           <span *ngIf="submitted && createEmpleado.invalid" class="badge text-bg-danger">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
           <!-- Iniciamos nuestro formulario -->
           <!-- Enlazamos los formularios ts y html con el property binding del formGroup y con la directiva formControlName, con el event binding se ejecuta un método al enviar el form -->
