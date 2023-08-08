@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmpleadoService } from 'src/app/services/empleado.service';
@@ -8,7 +8,7 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
   templateUrl: './create-empleado.component.html',
   styleUrls: ['./create-empleado.component.css']
 })
-export class CreateEmpleadoComponent {
+export class CreateEmpleadoComponent implements OnInit {
 
   createEmpleado: FormGroup; //Formulario
   submitted = false; //Para saber si se envió el form

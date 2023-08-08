@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +17,13 @@ export class EmpleadoService {
     //Añadimos en un documento la referencia y los datos que lo componen
     return addDoc(empleadoRef, empleado); // Retorna una Promesa
   }
+
+  //Método para consumir los datos de la BD
+  //Read - R
+  obtenerEmpleados(): Observable<any> {
+    //Creamos una referencia a la colleción
+    const empleadoRef = collection(this.firestore, 'empleados');
+    return collectionData(empleadoRef, {idField: 'id'}) as Observable<any>; //Transformamos a observable
+  }
+
 }
