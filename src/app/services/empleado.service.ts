@@ -11,7 +11,9 @@ export class EmpleadoService {
   //Método para generar los empleados e insertarlos en la base de datos
   //Create - C
   agregarEmpleado(empleado: any): Promise<any> {
+    //Creamos una referencia a la colleción
     const empleadoRef = collection(this.firestore, 'empleados'); // Servicio y nombre de la colección
+    //Añadimos en un documento la referencia y los datos que lo componen
     return addDoc(empleadoRef, empleado); // Retorna una Promesa
   }
 }

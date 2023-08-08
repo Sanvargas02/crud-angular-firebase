@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { EmpleadoService } from 'src/app/services/empleado.service';
 
 @Component({
   selector: 'app-create-empleado',
@@ -11,7 +12,10 @@ export class CreateEmpleadoComponent {
   createEmpleado: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder, // Inyección de Modulo para Formulario
+    private empleadoService: EmpleadoService // Servicio para conectar con Firebase
+    ) {
     this.createEmpleado = fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -30,6 +34,8 @@ export class CreateEmpleadoComponent {
       return ;
     }
     //Aquí podríamos usar una Interfaz
+    //empleado es el objeto que le vamos a pasar a firebase
+    //No pasamos directamente el createEmpleado ya que empleado tiene otros valores adicionales
     const empleado: any = {
       nombre: this.createEmpleado.value.nombre,
       apellido: this.createEmpleado.value.apellido,
@@ -38,10 +44,17 @@ export class CreateEmpleadoComponent {
       fechaCreacion: new Date(),
       fechaActualizacion: new Date()
     }
-    //empleado es el objeto que le vamos a pasar a firebase
-    console.log(empleado);
-    //Limpiar el formulario
-    this.createEmpleado.reset();
+    // Utilizamos el servico para conectar con Firebase
+    this.empleadoService.agregarEmpleado(empleado)
+    .then(() => {
+      console.log('empleado Registrado con éxito');
+      //Limpiar el formulario
+      this.submitted = false; // Para evitar que la validación del ngIf se dispare al limpiar con reset()
+      this.createEmpleado.reset(); // Al limpiar los campos hace que se coloque inválido el formulario
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
 }
