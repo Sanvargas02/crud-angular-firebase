@@ -17,37 +17,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Tomas</td>
-            <td>Perez</td>
-            <td>35533233</td>
-            <td>250</td>
-            <td>
-              <!-- Iconos con clases de fontawesome y bootstrap que le agregamos -->
-              <i class="fa-solid fa-pen-to-square fa-lg text-info"></i>
-            </td>
-            <td>
-              <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>Tomas</td>
-            <td>Perez</td>
-            <td>35533233</td>
-            <td>250</td>
-            <td>
-              <!-- Iconos con clases de fontawesome y bootstrap que le agregamos -->
-              <i class="fa-solid fa-pen-to-square fa-lg text-info"></i>
-            </td>
-            <td>
-              <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>Tomas</td>
-            <td>Perez</td>
-            <td>35533233</td>
-            <td>250</td>
+          <!-- Iteración del arreglo empleados y mostrando en html -->
+          <tr *ngFor="let empleado of empleados">
+            <!-- Interpolamos -->
+            <td>{{ empleado.nombre }}</td>
+            <td>{{ empleado.apellido }}</td>
+            <td>{{ empleado.documento }}</td>
+            <td>{{ empleado.salario }}</td>
             <td>
               <!-- Iconos con clases de fontawesome y bootstrap que le agregamos -->
               <i class="fa-solid fa-pen-to-square fa-lg text-info"></i>
