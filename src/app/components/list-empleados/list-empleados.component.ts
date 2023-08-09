@@ -23,7 +23,7 @@ export class ListEmpleadosComponent implements OnInit {
   getEmpleados() {
     this.empleadoService.obtenerEmpleados().subscribe(data => {
       //Data nos trae un arreglo con el conjunto de elemento de tipo Object - Arreglo de Objetos
-      console.log(data); //Nos muestra qué nos trae desde la base de Datos - Los objetos en un arreglo
+      //console.log(data); //Nos muestra qué nos trae desde la base de Datos - Los objetos en un arreglo
       //Podemos Manipular el arreglo y ser selectivos con los elemento usando ciclos de Js y condicionales
       // data.forEach((element:any) => {
       //   //console.log(element.id); //En este caso estoy recogiendo sólo los id

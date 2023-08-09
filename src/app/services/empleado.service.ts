@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy, limit } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -24,7 +24,11 @@ export class EmpleadoService {
     //Creamos una referencia a la colleción de la que queremos recibir los datos
     const empleadoRef = collection(this.firestore, 'empleados');
     //Retornamos el observable que nos devuelve una función anónima en la que nos trae los datos solicitados de la colección
-    return collectionData(empleadoRef, {idField: 'id'}) as Observable<any>; //Transformamos a observable
+    //return collectionData(empleadoRef, {idField: 'id'}) as Observable<any>; //Transformamos a observable
+
+    //Ordenamos los datos que queremos traer de la colleción usando orderBy y limit en un query
+    const q = query(empleadoRef, orderBy("fechaCreacion", "asc"));
+    return collectionData( q, {idField: 'id'}) as Observable<any>;
   }
 
 }
