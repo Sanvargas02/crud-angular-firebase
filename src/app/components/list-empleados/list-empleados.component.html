@@ -5,7 +5,7 @@
     <div class="card-body">
       <span class="h3">Listado de Empelados</span>
       <button type="text" routerLink="/create-empleado" class="btn btn-dark btn-lg float-end">Agregar</button>
-      <h5 *ngIf="empleados.length === 0">No hay datos para mostrar</h5>
+      <h5 style="margin-top: 30px;" *ngIf="empleados.length === 0">No hay datos para mostrar</h5>
       <!-- Tabla -->
       <!-- Utilizamos un ng if para que la tabla sólo se muestre si tenemos empleados -->
       <table *ngIf="empleados.length > 0" class="table mt-5 table-striped">
@@ -28,7 +28,11 @@
             <td>{{ empleado.salario | currency}}</td> <!-- Utilizamos un Pipe para mostrar el dato como moneda -->
             <td>
               <!-- Iconos con clases de fontawesome y bootstrap que le agregamos -->
-              <i class="fa-solid fa-pen-to-square fa-lg text-info"></i>
+              <!-- Necesitamos pasar datos desde el componente desde un archivo html -->
+              <!-- routerLink lo usamos como un property binding -->
+              <!-- Pasamos la dirección del componente y al que queremos enviar la información y enviamos la info del empleado al que le damos click en el icono -->
+              <!-- Esto también se puede hacer con un evento click, enviando el id desde el TS -->
+              <i class="fa-solid fa-pen-to-square fa-lg text-info" [routerLink]="['/edit-empleado/', empleado.id]"></i>
             </td>
             <td>
               <!-- Por medio del evento llamamos al método que elimina el elemento que sea seleccionado -->
