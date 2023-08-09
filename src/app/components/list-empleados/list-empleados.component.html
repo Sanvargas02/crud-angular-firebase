@@ -5,8 +5,10 @@
     <div class="card-body">
       <span class="h3">Listado de Empelados</span>
       <button type="text" routerLink="/create-empleado" class="btn btn-dark btn-lg float-end">Agregar</button>
+      <h5 *ngIf="empleados.length === 0">No hay datos para mostrar</h5>
       <!-- Tabla -->
-      <table class="table mt-5 table-striped">
+      <!-- Utilizamos un ng if para que la tabla sólo se muestre si tenemos empleados -->
+      <table *ngIf="empleados.length > 0" class="table mt-5 table-striped">
         <thead>
           <tr>
             <th>Nombre</th>
