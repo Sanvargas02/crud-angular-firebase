@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, query, orderBy, limit } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy, limit, doc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -27,8 +27,20 @@ export class EmpleadoService {
     //return collectionData(empleadoRef, {idField: 'id'}) as Observable<any>; //Transformamos a observable
 
     //Ordenamos los datos que queremos traer de la colleción usando orderBy y limit en un query
+    //El query nos sirve para organizar los datos que queremos traer de la BD
     const q = query(empleadoRef, orderBy("fechaCreacion", "asc"));
     return collectionData( q, {idField: 'id'}) as Observable<any>;
+  }
+
+
+  //Método para eliminar datos de la BD
+  //Delete - D
+  //Aquí podemos elegir pasar como parámetro el objeto entero con todos los elementos ó sólo el elemento con el que queremos crear la referencia para borrar
+  //En este caso pasamos el objeto con todos los elementos
+  borrarEmpelado(empleado: any): Promise<any> {
+    //Creamos la referencia al documento que queremos borrar
+    const placeDocRef = doc(this.firestore, `empleados/${empleado.id}`); // Borramos por id
+    return deleteDoc(placeDocRef); // Nos retorna una promesa
   }
 
 }

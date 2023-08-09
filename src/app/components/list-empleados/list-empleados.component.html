@@ -23,13 +23,14 @@
             <td>{{ empleado.nombre }}</td>
             <td>{{ empleado.apellido }}</td>
             <td>{{ empleado.documento }}</td>
-            <td>{{ empleado.salario }}</td>
+            <td>{{ empleado.salario | currency}}</td> <!-- Utilizamos un Pipe para mostrar el dato como moneda -->
             <td>
               <!-- Iconos con clases de fontawesome y bootstrap que le agregamos -->
               <i class="fa-solid fa-pen-to-square fa-lg text-info"></i>
             </td>
             <td>
-              <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+              <!-- Por medio del evento llamamos al método que elimina el elemento que sea seleccionado -->
+              <i (click)="eliminarEmpleado(empleado)" class="fa-solid fa-trash-can fa-lg text-danger"></i>
             </td>
           </tr>
         </tbody>

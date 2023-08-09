@@ -33,4 +33,13 @@ export class ListEmpleadosComponent implements OnInit {
     })
   }
 
+  //Método para eliminar el empleado
+  eliminarEmpleado(empleado: any) {
+    this.empleadoService.borrarEmpelado(empleado)
+    .then(() => {
+      alert('Empleado Eliminado con éxito');
+    })
+    .catch(error => {console.log(error)});
+  }
+
 }
