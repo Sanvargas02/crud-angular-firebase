@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, query, orderBy, limit, doc, deleteDoc, onSnapshot, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, query, orderBy, limit, doc, deleteDoc, onSnapshot, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -44,14 +44,24 @@ export class EmpleadoService {
   }
 
 
-  //Método para Editar un Empleado - Se trae un documento desde la BD y luego hacemos la lógica para modificarlo
+  //Métodos para Editar un Empleado
   //Update - U
-  editarEmpleado(id: string)  {
+
+  //Primero se trae un documento desde la BD. El que queremos editar
+  getEmpleado(id: string)  {
     //Creamos la referencia al documento que queremos editar
     const docRef = doc(this.firestore, `empleados/${id}`);
     //Primero obtenemos el Documento a editar
     return getDoc(docRef); //Retorna una promesa
     //return onSnapshot(docRef, (doc) => { console.log(doc.get) })
+  }
+
+  //Segundo se busca editar el empleado
+  //Parametros el id y toda la información del elemento, todo el objeto del empleado
+  actualizarEmpleado(id: string, data: any) {
+    //Referencia al documento
+    const docRef = doc(this.firestore, `empleados/${id}`);
+    return updateDoc(docRef, data); // Retornamos la promesa
   }
 
 }

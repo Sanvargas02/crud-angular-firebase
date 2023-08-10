@@ -40,17 +40,29 @@ export class CreateEmpleadoComponent implements OnInit {
   //Aquí llamamos el código que queremos ejecutar antes de que se inicie el componente, muy útil
   ngOnInit(): void {
     // Lógica para Editar
-    this.editEmpleado(); //Llamamos nuestro método para ejecutar la lógica de editar empleado apenas se cargue el componente
+    this.obtenerEmpleado(); //Llamamos nuestro método para ejecutar la lógica de editar empleado apenas se cargue el componente
   }
 
-  //Método para ingresar un empleado nuevo
-  agregarEmpleado() {
+  //Método para definir si estamos Creando o Editando
+  agregarEditarEmpleado() {
+
     this.submitted = true;
     // Si el formulario de crear empleado es invalido (Cuando no se llenan los campos en este caso) se retorna y no ejecuta codigo más allá del if
     if(this.createEmpleado.invalid) {
       return ;
     }
 
+    // Lógica para Editar
+    if( this.id === null ) {
+      this.agregarEmpleado(); //Por que No estamos capturando el id desde la URL
+    } else {
+      this.editarEmpleado(); // En caso de capturar el id
+    }
+
+  }
+
+  //Método para ingresar un empleado nuevo
+  agregarEmpleado() {
     this.loading = true;//Se empieza a mostrar el Spinner
 
     //Aquí podríamos usar una Interfaz
@@ -83,21 +95,36 @@ export class CreateEmpleadoComponent implements OnInit {
   }
 
   // Lógica para Editar
-  //Método para Editar un Empleado
-  editEmpleado() {
+
+  //Método para Obtener un Empleado
+  obtenerEmpleado() {
     this.titulo = 'Editar Empleado'; //Cambiar el mensaje en el h3 del html
     //Sólo se ejecuta esta lógica en caso de que el id no sea null
     if(this.id !== null) {
+      //Colocamos la propiedad de loading que importamos del bootstrap
+      this.loading = true;
       // Pasamos el id que traemos desde la URL, el que fue seleccionado
-      this.empleadoService.editarEmpleado(this.id)
-      .then(
+      this.empleadoService.getEmpleado(this.id)
+      .then( data => {
+        //Queremos desactivar el loading una vez la promesa se cumple
+        this.loading = false;
         //Con data.data() traemos todo un documento
-        data => {console.log(data.data()?.['nombre']) //Sintaxis para traer un documento específico
-        //Ahora procedemos a rellenar los campos de nuestro formulario en el html
-
+        //console.log(data.data()?.['nombre']) //Sintaxis para traer un documento específico
+        //Ahora procedemos a rellenar los campos de nuestro formulario en el html usando el método setValue
+        this.createEmpleado.setValue({
+          nombre: data.data()?.['nombre'],
+          apellido: data.data()?.['apellido'],
+          documento: data.data()?.['documento'],
+          salario: data.data()?.['salario']
+        })
       })
       .catch(error => {console.log(error)})
     }
+  }
+
+  //Método para editar el empleado
+  editarEmpleado() {
+
   }
 
 }

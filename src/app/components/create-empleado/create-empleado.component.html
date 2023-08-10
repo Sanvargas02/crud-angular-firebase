@@ -15,7 +15,7 @@
           <span *ngIf="submitted && createEmpleado.invalid" class="badge text-bg-danger">TODOS LOS CAMPOS SON OBLIGATORIOS</span>
           <!-- Iniciamos nuestro formulario -->
           <!-- Enlazamos los formularios ts y html con el property binding del formGroup y con la directiva formControlName, con el event binding se ejecuta un método al enviar el form -->
-          <form class="mt-4" [formGroup]="createEmpleado" (ngSubmit)="agregarEmpleado()">
+          <form class="mt-4" [formGroup]="createEmpleado" (ngSubmit)="agregarEditarEmpleado()">
             <!-- Fila 1 -->
             <div class="row">
               <div class="col">
