@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 
 @Component({
@@ -14,20 +14,33 @@ export class CreateEmpleadoComponent implements OnInit {
   submitted = false; //Para saber si se envió el form
   loading = false; //Para el Spinner
 
+  //Lógica para Editar
+  id: string | null; // Cuando sea el componente sea de lógica editar el id va a ser de tipo string y cuando el componente sea de lógica crear va a ser de tipo null. Esto no se tiene que hacer en caso de que utilizemos componentes aparte para cada lógica
+  titulo = 'Agregar Empleado'; //El título del h3 en el template
+
   constructor(
     private fb: FormBuilder, // Inyección de Modulo para Formulario
     private empleadoService: EmpleadoService, // Servicio para conectar con Firebase
-    private router: Router // Clase Router para moverme a otro componente una vez enviado el form
+    private router: Router, // Clase Router para moverme a otro componente una vez enviado el form
+    private aRoute: ActivatedRoute // Clase que nos ayuda a conseguir información de la URL
     ) {
+    // Lógica de Formulario
     this.createEmpleado = fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       documento: ['', Validators.required],
       salario: ['', Validators.required]
     })
+
+    // Lógica para Editar
+    this.id = this.aRoute.snapshot.paramMap.get('id'); // En get() se coloca el nombre de el dato que pusimos en la URL del app-routing
+    //console.log(this.id); //Verificamos que lo tenemos
   }
 
+  //Aquí llamamos el código que queremos ejecutar antes de que se inicie el componente, muy útil
   ngOnInit(): void {
+    // Lógica para Editar
+    this.editEmpleado(); //Llamamos nuestro método para ejecutar la lógica de editar empleado apenas se cargue el componente
   }
 
   //Método para ingresar un empleado nuevo
@@ -67,6 +80,24 @@ export class CreateEmpleadoComponent implements OnInit {
       console.log(error);
       this.loading = false // Pausa el Spinner
     })
+  }
+
+  // Lógica para Editar
+  //Método para Editar un Empleado
+  editEmpleado() {
+    this.titulo = 'Editar Empleado'; //Cambiar el mensaje en el h3 del html
+    //Sólo se ejecuta esta lógica en caso de que el id no sea null
+    if(this.id !== null) {
+      // Pasamos el id que traemos desde la URL, el que fue seleccionado
+      this.empleadoService.editarEmpleado(this.id)
+      .then(
+        //Con data.data() traemos todo un documento
+        data => {console.log(data.data()?.['nombre']) //Sintaxis para traer un documento específico
+        //Ahora procedemos a rellenar los campos de nuestro formulario en el html
+
+      })
+      .catch(error => {console.log(error)})
+    }
   }
 
 }
