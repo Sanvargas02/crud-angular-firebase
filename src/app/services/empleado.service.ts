@@ -58,7 +58,7 @@ export class EmpleadoService {
 
   //Segundo se busca editar el empleado
   //Parametros el id y toda la información del elemento, todo el objeto del empleado
-  actualizarEmpleado(id: string, data: any) {
+  actualizarEmpleado(id: string, data: any): Promise<any> {
     //Referencia al documento
     const docRef = doc(this.firestore, `empleados/${id}`);
     return updateDoc(docRef, data); // Retornamos la promesa

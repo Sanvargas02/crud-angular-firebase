@@ -56,7 +56,7 @@ export class CreateEmpleadoComponent implements OnInit {
     if( this.id === null ) {
       this.agregarEmpleado(); //Por que No estamos capturando el id desde la URL
     } else {
-      this.editarEmpleado(); // En caso de capturar el id
+      this.editarEmpleado(this.id); // En caso de capturar el id - Ya se sabe que el id no es nulo
     }
 
   }
@@ -123,7 +123,36 @@ export class CreateEmpleadoComponent implements OnInit {
   }
 
   //Método para editar el empleado
-  editarEmpleado() {
+  editarEmpleado(id: string) {
+
+    //Creamos el objeto - debido a que tenemos el elemento de fecha de Actualización que debemos incluir y que no se encuentra en el formulario.
+    //Omitimos la fecha de creación, ya que es un valor que no queremos modificar, ese se mantiene.
+    const empleado: any = {
+      nombre: this.createEmpleado.value.nombre,
+      apellido: this.createEmpleado.value.apellido,
+      documento: this.createEmpleado.value.documento,
+      salario: this.createEmpleado.value.salario,
+      // fechaCreacion: new Date(),
+      fechaActualizacion: new Date()
+    }
+
+    //Aplicamos la carga
+    this.loading = true;
+
+    //Utilizamos el servicio
+    //Para corregir el error de id como nulo, nos vamos a enfocar en pasarlo como parámetro sólo cuando tenga un valor, para que eso sea posible utilizamos la condicion if en la que estamos llamando a nuestro método a ejecutar.
+    this.empleadoService.actualizarEmpleado(id, empleado) //Manejamos la promesa
+    .then(() => {
+      //Cancelamos el loading ya que se realizó la promesa
+      this.loading = false;
+      alert('El empleado fue modificado con éxito'); //Mensaje
+      //Redireccionamos al componente del listado
+      this.router.navigate(['/list-empleados']);
+    })
+    .catch(error => {
+      console.log(error);
+      alert('Ocurrió un error'); //Mensaje de error
+    })
 
   }
 
